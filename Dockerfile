@@ -44,4 +44,5 @@ EXPOSE 8080
 # Start octane
 CMD php artisan octane:start --port=8080 --host="0.0.0.0"
 
-HEALTHCHECK CMD php artisan octane:status --server="roadrunner"
+# https://github.com/laravel/octane/issues/403#issuecomment-943401361
+HEALTHCHECK CMD kill -0 `cat /srv/laravel/storage/logs/octane-server-state.json | awk -F"[,:}]" '{for(i=1;i<=NF;i++){if($i~/'masterProcessId'\042/){print $(i+1)}}}' | tr -d '"' | sed -n 1p`
