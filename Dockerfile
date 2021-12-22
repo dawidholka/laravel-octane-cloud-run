@@ -1,4 +1,4 @@
-FROM php:8.0-cli-alpine3.13
+FROM php:8.0-cli-alpine3.15
 
 # Install packages and remove default server definition
 RUN apk --no-cache add socat libzip-dev \
@@ -22,7 +22,7 @@ RUN ln -sf /proc/1/fd/1 /var/log/octane.log
 
 COPY --from=spiralscout/roadrunner:2.6.6 /usr/bin/rr /usr/bin/rr
 
-COPY docker/config/php.ini "$PHP_INI_DIR/php.ini"
+COPY docker/php.ini "$PHP_INI_DIR/php.ini"
 
 # Switch to use a non-root user from here on
 USER nobody
